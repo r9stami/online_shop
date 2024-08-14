@@ -48,4 +48,4 @@ python manage.py runserver
 **اگر هرگونه مشکل یا سوالی داشتید لطفا یک issue در مخزن Github ایجاد کنید یا با ما تماس بگیرید**
 
 # مجوز
-**این پروژه تحت لیسانسه و مجوز MIT LICENSE است**
+**این پروژه تحت لیسانسه و مجوز [MIT LICENSE](https://github.com/r9stami/online_shop/blob/master/LICENSE) است**
