@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+   {% block content %}
+
+        <!-- Contact Start -->
+    <div class="container-fluid">
+        <h2 class="section-title position-relative text-uppercase text-center mx-xl-5 mb-4"><span class="bg-secondary pr-3">Login</span></h2>
+        <div class=" px-xl-5">
+            <div class=" mb-5 contact-us" style="">
+                <div class="contact-form bg-light p-30">
+
+                    <form method="post" action="{% url 'account:login' %}">
+                        {% csrf_token %}
+                    {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger">{{ error }}</div>
+                    {% endfor %}
+
+                        <div class="control-group">
+                             {% for error in form.phone.errors %}
+                            <div class="alert alert-warning">{{ error }}</div>
+                            {% endfor %}
+                            {{ form.phone.label }}
+                            {{ form.phone }}
+                            <p class="help-block text-danger"></p>
+                        </div>
+                        <br>
+
+
+
+                        <div>
+                            <button class="btn btn-primary py-2 px-4" type="submit">Login</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Contact End -->
+
+{% endblock %}

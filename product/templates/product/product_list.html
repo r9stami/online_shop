@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+
+    <!-- Shop Start -->
+    <div class="container-fluid">
+        <div class="row px-xl-5">
+            <!-- Shop Sidebar Start -->
+            <div class="col-lg-3 col-md-4">
+                <!-- Price Start -->
+                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by price</span>
+                </h5>
+
+
+                <form method="post" action="{% url 'product:product_filter' %}">
+                    {% csrf_token %}
+                    <div class="bg-light p-4 mb-30">
+
+                        <div class="main">
+                            <div class="gfg">
+                                <p>Range Price</p>
+                            </div>
+                            <div class="custom-wrapper">
+
+                                <div class="header">
+                                    <h2 class="projtitle">
+
+                                    </h2>
+                                </div>
+
+                                <div class="price-input-container">
+                                    <div class="price-input">
+                                        <div class="price-field">
+                                            <span>Minimum Price</span>
+                                            <input type="number"
+                                                   class="min-input"
+                                                   placeholder="0">
+                                        </div>
+                                        <div class="price-field">
+                                            <span>Maximum Price</span>
+                                            <input type="number"
+                                                   class="max-input"
+                                                   placeholder="10000000">
+                                        </div>
+                                    </div>
+                                    <div class="slider-container">
+                                        <div class="price-slider">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Slider -->
+                                <div class="range-input">
+                                    <input type="range"
+                                           class="min-range"
+                                           min="0"
+                                           name="min_price"
+                                           max="10000"
+                                           value="0"
+                                           step="1">
+                                    <input type="range"
+                                           class="max-range"
+                                           min="0"
+                                           name="max_price"
+                                           max="10000000"
+                                           value=''
+                                           step="1">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <!-- Price End -->
+
+                    <!-- category Start -->
+                    <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by Category</span>
+                    </h5>
+                    <div class="bg-light p-4 mb-30">
+
+
+                        {% for category in category %}
+                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
+                                <input type="checkbox" class="custom-control-input" value="{{ category.title }}"
+                                       id="{{ category.title }}"name="category">
+                                <label class="custom-control-label" for="{{ category.title }}">{{ category.title }}</label>
+                                <span class="badge border font-weight-normal"></span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <!-- category End -->
+
+                    {% if request.resolver_match.url_name == 'product_list' %}
+                <button type="submit" class="btn btn-success btn-block">Filter</button>
+                        {% else %}
+                <a href="{% url 'product:product_list' %}" type="submit" class="btn btn-success btn-block">Back To All Product</a>
+                {% endif %}
+
+                </form>
+
+            </div>
+            <!-- Shop Sidebar End -->
+
+
+            <!-- Shop Product Start -->
+            <div class="col-lg-9 col-md-8">
+                <div class="row pb-3">
+                    <div class="col-12 pb-1">
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+
+                        </div>
+
+
+                    </div>
+                    {% for product in object_list %}
+                        <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
+
+                            <div class="product-item bg-light mb-4">
+                                <div class="product-img position-relative overflow-hidden">
+                                    <img class="img-fluid w-100" src="{{ product.image.url }}" alt="product image">
+                                    <div class="product-action">
+
+                                    </div>
+                                </div>
+                                <div class="text-center py-4">
+                                    <a class="h6 text-decoration-none text-truncate"
+                                       href="{{ product.get_absolute_url }}">{{ product.title }}</a>
+                                    <div class="d-flex align-items-center justify-content-center mt-2">
+                                        <h5 id="price_sort">{{ product.price }}تومان</h5>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    {% endfor %}
+
+                    <div class="col-12">
+                        <nav>
+                            {% if object_list.has_other_pages %}
+                                <ul class="pagination justify-content-center">
+                                    {% if object_list.has_previous %}
+                                        <li class="page-item "><a class="page-link" href="?page={{ object_list.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}"><span>Previous</span></a>
+                                        </li>
+                                    {% endif %}
+                                    {% for item in object_list.paginator.page_range %}
+                                        {% if object_list.number == item %}
+                                            <li class="page-item active"><a class="page-link" href="?page={{ item }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ item }}</a></li>
+                                        {% else %}
+                                            <li class="page-item"><a class="page-link" href="?page={{ item }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">{{ item }}</a></li>
+                                        {% endif %}
+                                    {% endfor %}
+                                    {% if object_list.has_next %}
+                                        <li class="page-item"><a class="page-link" href="?page={{ object_list.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}">Next</a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            {% endif %}
+                        </nav>
+                    </div>
+
+
+
+                </div>
+            </div>
+            <!-- Shop Product End -->
+        </div>
+    </div>
+    <!-- Shop End -->
+
+
+{% endblock %}

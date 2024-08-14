@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+   {% block  content %}
+   	 <!-- Checkout Start -->
+    <div class="container-fluid">
+        <div class="mr-auto">
+            <div class="">
+                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Billing Address</span></h5>
+                <div class="bg-light p-30 mb-5">
+                 <form method="post" action="{% url 'account:address_create' %}">
+                 {% csrf_token %}
+                    <div class="row">
+
+
+                            {% for error in form.non_field_errors %}
+                               <div class="alert alert-warning">{{ error }}</div>
+                            {% endfor %}
+
+
+                    <div class="col-md-6 form-group">
+                          {% for error in form.first_name.errors %}
+                                     <div class="alert alert-danger">
+                                     {{ error }}
+                                         </div>
+                                    {% endfor %}
+                            <label>{{ form.first_name.label }}</label>
+                           {{ form.first_name }}
+                    </div>
+                     <br>
+
+                            
+                             <div class="col-md-6 form-group">
+                          {% for error in form.last_name.errors %}
+                                     <div class="alert alert-danger">
+                                     {{ error }}
+                                         </div>
+                                    {% endfor %}
+                            <label>{{ form.last_name.label }}</label>
+                           {{ form.last_name }}
+                    </div>
+                     <br>
+
+                             <div class="col-md-6 form-group">
+                          {% for error in form.email.errors %}
+                                     <div class="alert alert-danger">
+                                     {{ error }}
+                                         </div>
+                                    {% endfor %}
+                            <label>{{ form.email.label }}</label>
+                           {{ form.email }}
+                    </div>
+                     <br>
+                            
+                             <div class="col-md-6 form-group">
+                          {% for error in form.phone.errors %}
+                                     <div class="alert alert-danger">
+                                     {{ error }}
+                                         </div>
+                                    {% endfor %}
+                            <label>{{ form.phone.label }}</label>
+                           {{ form.phone }}
+
+                    </div>
+                                <br>
+                            
+                              <div class="col-md-6 form-group">
+                          {% for error in form.postal_code.errors %}
+                                     <div class="alert alert-danger">
+                                     {{ error }}
+                                         </div>
+                                    {% endfor %}
+                            <label>{{ form.postal_code.label }}</label>
+                           {{ form.postal_code }}
+
+                    </div>
+                     <br>
+                            
+                             <div class="col-md-6 form-group">
+                          {% for error in form.address.errors %}
+                                     <div class="alert alert-danger">
+                                     {{ error }}
+                                         </div>
+                                    {% endfor %}
+                            <label>{{ form.address.label }}</label>
+                           {{ form.address }}
+
+                    </div>
+                                <br>
+                            <button type="submit" class="btn-danger btn-block">Create</button>
+                                
+
+
+                    </div>
+                  </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- Checkout End -->
+   {% endblock %}
+
